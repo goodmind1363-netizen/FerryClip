@@ -10,4 +10,5 @@ database_id = "a66e3a25-bb4b-4622-9734-b25edd0d4911"
 [vars]
 ACCESS_TEAM = "your-team-name"
 ACCESS_AUD = "paste-access-aud-tag-here"
-DOWNLOAD_API_URL = "https://PROVIDER-HOST/endpoint?url={url}"
+DL_INSTAGRAM_URL = "https://instagram-downloader-download-instagram-videos-stories1.p.rapidapi.com/fetch?url={url}"
+}"
