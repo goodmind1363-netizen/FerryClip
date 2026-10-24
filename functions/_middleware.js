@@ -1,4 +1,3 @@
-// Gives every page its own title, description and canonical link (better for Google).
 const M = {
   "/tiktok-video-downloader": ["TikTok Video Downloader - Free and Fast | Ferryclip", "Download public TikTok videos online for free. Paste the link, press Download and save the file."],
   "/instagram-reels-downloader": ["Instagram Reels Downloader - Free | Ferryclip", "Save public Instagram Reels online for free. Paste the link and download in seconds."],
@@ -17,11 +16,12 @@ const M = {
 };
 export async function onRequest({ request, next }) {
   const res = await next();
-  const u = new URL(request.url), m = M[u.pathname.replace(/\/$/, "")];
-  if (!m || !(res.headers.get("content-type") || "").includes("text/html")) return res;
-  return new HTMLRewriter()
+  const u = new URL(request.url), path = u.pathname.replace(/\/$/, ""), m = M[path];
+  if (!(res.headers.get("content-type") || "").includes("text/html") || path.startsWith("/admin") || path.startsWith("/blog/")) return res;
+  const rw = new HTMLRewriter().on("body", { element(el) { el.append('<script src="/dl.js" defer></script>', { html: true }); } });
+  if (m) rw
     .on("title", { element(el) { el.setInnerContent(m[0]); } })
     .on('meta[name="description"]', { element(el) { el.setAttribute("content", m[1]); } })
-    .on("head", { element(el) { el.append(`<link rel="canonical" href="${u.origin}${u.pathname.replace(/\/$/, "")}">`, { html: true }); } })
-    .transform(res);
+    .on("head", { element(el) { el.append(`<link rel="canonical" href="${u.origin}${path}">`, { html: true }); } });
+  return rw.transform(res);
 }
