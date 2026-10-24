@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ferryclip – Free Video Downloader</title>
+<meta name="description" content="Download TikTok, Instagram and YouTube videos in seconds. Free, fast and simple.">
+<meta name="theme-color" content="#13294b">
+<meta property="og:site_name" content="Ferryclip"><meta property="og:type" content="website"><meta property="og:title" content="Ferryclip - Free Video Downloader"><meta property="og:description" content="Download TikTok, Instagram and YouTube videos in seconds."><meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2313294b'/%3E%3Cpath d='M32 10l18 22-18 22-18-22z' fill='%23e8c964'/%3E%3C/svg%3E">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Ferryclip","applicationCategory":"MultimediaApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<style>
+:root{--cream:#faf5e8;--card:#fffdf7;--navy:#13294b;--navy2:#0c1b33;--gold:#c9a227;--gold2:#e8c964;--mut:#5d6b85;--line:#e6d9b3;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--cream);color:var(--navy);font:16px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:0 18px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--navy2)}
+.hd{display:flex;align-items:center;justify-content:space-between;height:62px}
+.logo{font-size:24px;font-weight:800;color:var(--gold2);cursor:pointer;letter-spacing:.3px}
+.burger{width:46px;height:46px;border:1.5px solid var(--gold);border-radius:12px;background:none;cursor:pointer;display:grid;place-content:center;gap:5px}
+.burger i{display:block;width:22px;height:2.5px;background:var(--gold2);border-radius:2px}
+.burger i:nth-child(2){width:16px;margin-left:auto}
+#ov{position:fixed;inset:0;background:#0c1b3399;opacity:0;pointer-events:none;transition:.25s;z-index:30}
+#dr{position:fixed;top:0;right:0;bottom:0;width:min(86vw,340px);background:var(--navy);border-left:3px solid var(--gold);transform:translateX(100%);transition:.3s;z-index:40;padding:22px 24px;overflow:auto;padding-top:calc(22px + env(safe-area-inset-top,0px))}
+body.open #dr{transform:none}body.open #ov{opacity:1;pointer-events:auto}
+#dr .x{background:none;border:0;color:var(--gold2);font-size:30px;cursor:pointer;float:right;line-height:1}
+#dr h4{color:var(--gold2);margin:26px 0 6px;font-size:13px;letter-spacing:2px;text-transform:uppercase}
+#dr a{display:block;color:#fff;padding:9px 0;font-size:17px;cursor:pointer;border-bottom:1px solid #ffffff14}#dr a:hover{color:var(--gold2)}
+.hero{background:radial-gradient(circle at 85% 0,#c9a22740,transparent 45%),radial-gradient(circle at 5% 100%,#c9a22724,transparent 40%),repeating-linear-gradient(45deg,#ffffff07 0 2px,transparent 2px 24px),var(--navy);color:#fff;border-radius:0 0 50% 50%/0 0 56px 56px;text-align:center;padding:50px 0 80px}
+.hero h1{font-size:clamp(32px,6vw,56px);line-height:1.1;margin:0 0 12px}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--gold2),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:#cfd8ea;font-size:18px;max-width:540px;margin:0 auto 26px}
+.glass{max-width:740px;margin:0 auto;background:#ffffff14;border:1px solid #c9a22780;border-radius:20px;padding:16px;backdrop-filter:blur(6px)}
+.tabs{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.tab{font:inherit;font-weight:600;border:1px solid #c9a22766;background:none;color:#fff;padding:8px 18px;border-radius:30px;cursor:pointer}
+.tab.on{background:var(--gold);color:var(--navy2);border-color:var(--gold)}
+.bar{display:flex;gap:8px;background:#fff;border-radius:14px;padding:6px}
+.bar input{flex:1;min-width:0;border:0;font:inherit;padding:10px 12px;color:var(--navy);outline:0;background:none}
+.gbtn{font:inherit;font-weight:700;border:0;cursor:pointer;background:linear-gradient(135deg,var(--gold2),var(--gold));color:var(--navy2);padding:10px 26px;border-radius:10px}
+.gbtn:hover{filter:brightness(1.06)}
+#res{margin-top:12px;font-weight:600;white-space:pre-wrap;color:var(--gold2)}
+.chips{margin-top:16px;color:#cfd8ea;font-size:14px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
+.mini{background:var(--navy);color:#fff;border-radius:0 0 50% 50%/0 0 40px 40px;text-align:center;padding:34px 0 52px}.mini h1{margin:0;font-size:clamp(26px,4.5vw,40px)}
+h2.sec{font-size:26px;margin:40px 0 16px;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{display:block;color:inherit;text-decoration:none;background:var(--card);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:14px;padding:20px;cursor:pointer;transition:.2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 26px #13294b24}
+.card b{font-size:18px}.card p{color:var(--mut);margin:6px 0 0;font-size:15px}
+.ic{width:42px;height:42px;border-radius:11px;background:var(--navy);color:var(--gold2);display:grid;place-items:center;font-weight:800;margin-bottom:10px}
+.steps{counter-reset:s}.step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.step:before{counter-increment:s;content:counter(s);display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--navy2);font-weight:800;margin-bottom:8px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;margin:28px 0}.box h2{margin-top:0}
+label{display:block;font-size:13px;color:var(--mut);margin:10px 0 4px}
+.box input,.box select{width:100%;font:inherit;padding:9px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--navy)}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.out{margin-top:16px;padding:16px;background:#c9a22719;border-left:4px solid var(--gold);border-radius:8px;font-weight:600;white-space:pre-wrap}
+footer{background:var(--navy);color:#cfd8ea;margin-top:50px;padding:26px 0;border-top:3px solid var(--gold);text-align:center;font-size:14px}
+footer a{color:var(--gold2);cursor:pointer;margin:0 8px}
+@media(max-width:600px){.bar{flex-direction:column}}
+.th{max-width:160px;border-radius:10px;display:block;margin:0 auto 8px}.dls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}.dls a{text-decoration:none;font-size:14px}.note{font-size:13px;color:#aebbd4;margin:14px 0 0}
+.hero{position:relative;overflow:hidden;padding:92px 0 84px}.hero .wrap{position:relative;z-index:1}
+.bg{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:14px 0 36px;pointer-events:none;opacity:.5;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
+.lane{display:flex;width:max-content;animation:mv 70s linear infinite;will-change:transform}.lane.r{animation-direction:reverse;animation-duration:85s}
+@keyframes mv{to{transform:translateX(-50%)}}
+.vc{flex:none;display:flex;align-items:center;gap:10px;height:62px;padding:0 22px;margin-right:14px;border-radius:16px;border:1px solid #c9a22755;background:linear-gradient(135deg,#ffffff12,#c9a2271f);color:#e8c964;font-weight:700;font-size:15px;white-space:nowrap}
+.vc i{font-style:normal;width:30px;height:30px;border-radius:50%;background:#c9a2272e;display:grid;place-items:center;font-size:11px}
+@media(prefers-reduced-motion:reduce){.lane{animation:none}}
+.guide ol{padding-left:22px;margin:8px 0}.guide h3{margin:16px 0 2px;font-size:17px}.guide p{margin:0;color:var(--mut)}
+</style></head><body>
+<header><div class="wrap hd"><div class="logo" onclick="go('home')">◆ Ferryclip</div><button class="burger" aria-label="Menu" onclick="menu(1)"><i></i><i></i><i></i></button></div></header>
+<div id="ov" onclick="menu(0)"></div>
+<aside id="dr"><button class="x" aria-label="Close" onclick="menu(0)">×</button><div id="dm"></div></aside>
+<main id="app"></main>
+<footer><div class="wrap"><a onclick="go('blog')">Blog</a><a onclick="go('faq')">FAQ</a><a onclick="go('contact')">Contact</a><a onclick="go('about')">About</a><a onclick="go('privacy')">Privacy</a><a onclick="go('terms')">Terms</a><a onclick="go('dmca')">DMCA</a><p>© 2026 Ferryclip</p></div></footer>
+<script>
+const P={home:["Home",""],mp3:["Video to MP3 Converter","video-to-mp3-converter"],tiktok:["TikTok Video Downloader","tiktok-video-downloader"],instagram:["Instagram Reels Downloader","instagram-reels-downloader"],youtube:["YouTube Video Downloader","youtube-video-downloader"],price:["Influencer Price Calculator","influencer-price-calculator"],engagement:["Engagement Rate Calculator","engagement-rate-calculator"],fake:["Fake Follower Checker","fake-follower-checker"],blog:["Blog","blog"],faq:["Frequently Asked Questions","faq"],contact:["Contact","contact"],about:["About","about"],privacy:["Privacy Policy","privacy"],terms:["Terms of Use","terms"],dmca:["Copyright / DMCA","dmca"]};
+const PL={tiktok:"TikTok",instagram:"Instagram",youtube:"YouTube"},DL=["tiktok","instagram","youtube"],TL=["mp3","price","engagement","fake"];
+const HOST={tiktok:["tiktok.com"],instagram:["instagram.com"],youtube:["youtube.com","youtu.be"]};
+const DESC={tiktok:"Paste a public TikTok link, press Download and pick your format.",instagram:"Paste a public Instagram Reel link, press Download and pick your format.",youtube:"Paste a YouTube video link, press Download and pick your format.",mp3:"Convert a video to MP3 right in your browser.",price:"Estimate a fair price per sponsored post.",engagement:"Measure how engaged an audience really is.",fake:"Estimate the risk of fake followers."};
+const TEXT={faq:"Is it free?\nYes, the downloaders are free to use.\n\nDo I need an account?\nNo.\n\nWhich links are supported?\nPublic TikTok, Instagram and YouTube links.\n\nWhat may I download?\nOnly content you own or have permission to download.",contact:"Email: support@yourdomain.com\nWe usually reply within two business days.",about:"Ferryclip helps people save videos they own or have permission to use, and offers a few free tools for creators. We are an independent service and are not affiliated with TikTok, Instagram or YouTube.",privacy:"We collect basic technical data such as IP address, browser type and pages visited to run and secure the site. We do not ask you to create an account. We may show ads through Google AdSense. Google and its partners use cookies to serve ads based on your visits to this and other sites; you can manage this at https://adssettings.google.com. Links you paste are processed only to fetch the requested file and are not published. By using the site you agree to this policy.",terms:"Use Ferryclip only for content you own or have permission to download. You are responsible for respecting copyright and the terms of the platforms. The service is provided as is, without guarantees of availability. We may block abusive use. We are not affiliated with TikTok, Instagram or YouTube.",dmca:"If you are a copyright owner and believe content was accessed through Ferryclip without permission, email support@yourdomain.com with: your name, a description of the work, the link in question, a statement that you are authorized to act for the owner, and your signature. We review notices promptly."};
+const SAMPLE=[{"id": "s1", "title": "How to Back Up Your Own TikTok, Instagram and YouTube Videos", "body": "Your videos are your work. If an account is hacked, suspended or deleted, you can lose years of content overnight. A simple backup routine takes only a few minutes.\n\nStart with the official tools. TikTok lets you request a copy of your data from the account settings, under Download your data. Instagram offers Download your information in the Accounts Center. YouTube creators can export their videos through Google Takeout. These exports contain your original uploads and are the safest option because the platforms provide them.\n\nKeep the originals too. Videos you recorded on your phone or edited on your computer are higher quality than anything downloaded back from a platform, which is compressed. Store them in two places, for example an external drive and a cloud folder.\n\nName your files clearly. Use the date and a short title, such as 2026-10-23-travel-vlog. When you have hundreds of clips, good names save hours.\n\nIf you need to save a public video that you own and no longer have the original file, a link-based tool like Ferryclip can help. Only use it for content you created or have permission to use.\n\nFinally, repeat the backup regularly. Once a month is enough for most creators. Put a reminder in your calendar and treat it like any other routine task.", "date": "2026-10-23"}, {"id": "s2", "title": "What Is a Good Engagement Rate on Instagram and TikTok?", "body": "Engagement rate shows how many people actually interact with a creator’s posts compared with how many follow them. It is one of the first numbers brands check before working with an influencer.\n\nThe most common formula is simple: add the likes and comments (and shares, if you track them), divide by the number of followers, then multiply by 100. For example, a post with 800 likes and 40 comments from an account with 20,000 followers has an engagement rate of 4.2 percent.\n\nWhat counts as good? Benchmarks change by platform, niche and account size, but as a rough guide, below 1 percent is low, 1 to 3 percent is average, 3 to 6 percent is good and above 6 percent is excellent. TikTok accounts often see higher rates than Instagram, and smaller accounts usually have higher rates than very large ones.\n\nWhy it matters more than follower count: an account with 10,000 engaged followers can bring a brand better results than an account with 200,000 inactive ones. A sudden jump in followers without a matching rise in likes can also be a warning sign of fake or purchased followers.\n\nYou can test your own numbers with the Engagement Rate Calculator on Ferryclip. For a fuller picture, average the last 10 to 20 posts instead of using a single one, and compare with similar accounts in your niche.", "date": "2026-10-23"}, {"id": "s3", "title": "Copyright Basics for Creators: What You Can and Cannot Download", "body": "Not every public video is free to save and reuse. Understanding a few basics helps you avoid takedowns, account strikes and legal trouble.\n\nContent you created yourself is yours. Saving a copy of your own videos for backup or to repost on another platform is generally fine, although you should still follow each platform’s rules.\n\nContent made by someone else is usually protected by copyright, even if it is public and free to watch. Downloading it for private viewing may be tolerated in some places, but sharing, reposting or using it in your own videos without permission can be infringement.\n\nPermission can come in several forms. A creator may give you written consent, publish the video under an open license such as Creative Commons, or offer a media kit for brands. Always check the exact terms, because some licenses forbid commercial use.\n\nFair use and similar exceptions are limited and depend on the country. Short clips used for commentary, criticism or education may qualify, but there is no magic number of seconds that makes a clip safe.\n\nPractical tips: keep proof of permission, credit the creator where required, and remove the content quickly if the owner asks. If you receive a takedown notice, respond promptly and honestly.\n\nAt Ferryclip we ask visitors to download only content they own or have permission to use. If you believe something was saved without your permission, contact us through our Copyright page. This article is general information, not legal advice.", "date": "2026-10-23"}];
+const TS="";
+let POSTS=SAMPLE,LIVE=false,cur="home",tab="tiktok";
+const $=i=>document.getElementById(i),n=i=>parseFloat($(i).value)||0,fm=x=>"$"+Math.round(x).toLocaleString("en-US");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const menu=o=>document.body.classList.toggle("open",!!o);
+function key(){const h=location.hash.slice(1),s=h||location.pathname.split("/").filter(Boolean)[0]||"";if(s.startsWith("post-"))return s;return Object.keys(P).find(k=>s&&P[k][1]==s)||"home"}
+function go(k){cur=k;menu(0);try{if(LIVE)history.pushState(null,"",k=="home"?"/":"/"+P[k][1]);else history.replaceState(null,"","#"+(P[k]?P[k][1]:k))}catch(e){}render();scrollTo(0,0)}
+function sel(x){tab=x;document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("on",b.dataset.k==x));$("lk").placeholder="Paste your "+PL[x]+" link here";$("res").textContent=""}
+async function dl(){const v=$("lk").value.trim(),t=DL.includes(cur)?cur:tab,R=$("res");let ok=false;try{const h=new URL(v).hostname;ok=HOST[t].some(x=>h.endsWith(x))}catch(e){}
+if(!ok){R.textContent="Please paste a valid "+PL[t]+" link.";return}
+let tk="";if(TS){tk=window.turnstile?turnstile.getResponse():"";if(!tk){R.textContent="Please complete the security check first.";return}}
+R.textContent="Working on it...";
+try{const r=await fetch("/api/resolve?url="+encodeURIComponent(v),{headers:{"X-TS":tk}}),d=await r.json(),ls=(d.links||[]).filter(x=>/^https?:/.test(x));
+R.innerHTML=(d.thumbnail?`<img class="th" loading="lazy" decoding="async" referrerpolicy="no-referrer" src="${esc(d.thumbnail)}" alt="">`:"")+(d.title?`<div>${esc(d.title)}</div>`:"")+(ls.length?`<div class="dls">${ls.map((x,i)=>`<a class="gbtn" href="${esc(x)}" target="_blank" rel="noopener nofollow" download>Download ${i+1}</a>`).join("")}</div>`:`<div>${esc(d.error||"No downloadable file was found for this link.")}</div>`)}
+catch(e){R.textContent="Preview mode: downloads work only on the live site."}
+if(TS&&window.turnstile)turnstile.reset()}
+const REEL=["TikTok","Instagram Reels","YouTube","MP4 video","MP3 audio","Shorts","Clips","Fast","Free","No signup","Reels","Backup"];
+const lane=(c,o)=>`<div class="lane ${c}">${[...o,...o].map(x=>`<span class="vc"><i>▶</i>${x}</span>`).join("")}</div>`;
+const BG=`<div class="bg" aria-hidden="true">${lane("",REEL)}${lane("r",[...REEL].reverse())}</div>`;
+function hero(k,h1,sub){const t=k||tab;return `<section class="hero">${BG}<div class="wrap"><h1>${h1}</h1><p>${esc(sub)}</p><div class="glass">${k?"":`<div class="tabs">${DL.map(x=>`<button class="tab ${x==t?"on":""}" data-k="${x}" onclick="sel('${x}')">${PL[x]}</button>`).join("")}</div>`}<div class="bar"><input id="lk" aria-label="Video link" inputmode="url" autocomplete="off" placeholder="Paste your ${PL[t]} link here"><button class="gbtn" onclick="dl()">Download</button></div><div id="res"></div><div id="ts"></div></div><div class="chips"><span>✓ Free</span><span>✓ No signup</span><span>✓ Fast</span></div><p class="note">Only download content you own or have permission to use.</p></div></section>`}
+const cards=l=>`<div class="grid">${l.map(k=>`<a class="card" onclick="go('${k}')"><div class="ic">${(PL[k]||P[k][0])[0]}</div><b>${P[k][0]}</b><p>${esc(DESC[k])}</p></a>`).join("")}</div>`;
+const plink=p=>LIVE?`<a class="card" href="/blog/${p.id}">`:`<a class="card" onclick="go('post-${p.id}')">`;
+const pcards=l=>l.length?`<div class="grid">${l.map(p=>`${plink(p)}<b>${esc(p.title)}</b><p>${p.date} · ${esc(p.body.slice(0,100))}</p></a>`).join("")}</div>`:"<p>No posts yet.</p>";
+const out=f=>{$("o").textContent=f()};
+const TOOLS={
+mp3:()=>`<p>Convert the audio of a video file to MP3 in your browser. Your file is never uploaded.</p><input id="f" type="file" accept="video/*,audio/*"><p><button class="gbtn" onclick="toMp3()">Convert to MP3</button></p><div class="out" id="o">Choose a file to start.</div>`,
+price:()=>`<div class="row"><div><label>Platform</label><select id="a"><option value="10">Instagram</option><option value="8">TikTok</option><option value="6">YouTube</option></select></div><div><label>Followers</label><input id="b" type="number" value="50000"></div><div><label>Engagement %</label><input id="c" type="number" value="3" step=".1"></div></div><p><button class="gbtn" onclick="out(()=>{const f=n('b')/1000*n('a')*Math.max(.5,Math.min(2.5,n('c')/2.5));return 'Estimated price per post:\\n'+fm(f*.8)+' – '+fm(f*1.3)})">Calculate</button></p><div class="out" id="o">Result will appear here.</div>`,
+engagement:()=>`<div class="row"><div><label>Followers</label><input id="a" type="number" value="20000"></div><div><label>Avg likes</label><input id="b" type="number" value="800"></div><div><label>Avg comments</label><input id="c" type="number" value="40"></div><div><label>Avg shares (optional)</label><input id="d" type="number" value="0"></div></div><p><button class="gbtn" onclick="out(()=>{const r=(n('b')+n('c')+n('d'))/Math.max(1,n('a'))*100;return 'Engagement rate: '+r.toFixed(2)+'%\\n'+(r>6?'Excellent':r>3?'Good':r>1?'Average':'Low')})">Calculate</button></p><div class="out" id="o">Result will appear here.</div>`,
+fake:()=>`<div class="row"><div><label>Followers</label><input id="a" type="number" value="50000"></div><div><label>Following</label><input id="b" type="number" value="700"></div><div><label>Posts</label><input id="c" type="number" value="120"></div><div><label>Avg likes</label><input id="d" type="number" value="900"></div></div><p><button class="gbtn" onclick="out(()=>{let s=0,f=n('a'),e=n('d')/Math.max(1,f)*100;if(e<.8)s+=40;else if(e<1.5)s+=20;if(n('b')>f*.8)s+=20;if(n('c')<10&&f>10000)s+=25;if(f>5000&&n('d')<30)s+=15;s=Math.min(95,s);return 'Estimated fake-follower risk: '+s+'%\\n'+(s>55?'High risk':s>30?'Medium risk':'Low risk')+'\\n(Heuristic estimate, not an audit.)'})">Check</button></p><div class="out" id="o">Result will appear here.</div>`};
+const to16=a=>{const o=new Int16Array(a.length);for(let i=0;i<a.length;i++){const s=Math.max(-1,Math.min(1,a[i]));o[i]=s<0?s*32768:s*32767}return o};
+function wav(b){const c=Math.min(2,b.numberOfChannels),N=b.length,r=b.sampleRate,v=new DataView(new ArrayBuffer(44+N*c*2)),w=(o,s)=>[...s].forEach((x,i)=>v.setUint8(o+i,x.charCodeAt(0)));
+w(0,"RIFF");v.setUint32(4,36+N*c*2,true);w(8,"WAVEfmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,c,true);v.setUint32(24,r,true);v.setUint32(28,r*c*2,true);v.setUint16(32,c*2,true);v.setUint16(34,16,true);w(36,"data");v.setUint32(40,N*c*2,true);
+const ch=[...Array(c).keys()].map(i=>to16(b.getChannelData(i)));let p=44;for(let i=0;i<N;i++)for(let k=0;k<c;k++){v.setInt16(p,ch[k][i],true);p+=2}return new Blob([v],{type:"audio/wav"})}
+const loadLame=()=>window.lamejs?Promise.resolve():new Promise((ok,no)=>{const s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js";s.onload=ok;s.onerror=no;document.head.appendChild(s)});
+async function toMp3(){const f=$("f").files[0],o=$("o");if(!f){o.textContent="Choose a file first.";return}
+if(f.size>100*1024*1024){o.textContent="This file is too large for in-browser conversion (max 100 MB).";return}
+try{o.textContent="Decoding audio...";const ctx=new(window.AudioContext||window.webkitAudioContext)(),buf=await ctx.decodeAudioData(await f.arrayBuffer());ctx.close();
+let blob,ext="mp3";
+try{await loadLame();o.textContent="Encoding MP3...";await new Promise(r=>setTimeout(r,30));const c=Math.min(2,buf.numberOfChannels),e=new lamejs.Mp3Encoder(c,buf.sampleRate,128),L=to16(buf.getChannelData(0)),R=c>1?to16(buf.getChannelData(1)):null,parts=[];
+for(let i=0;i<L.length;i+=1152){const d=R?e.encodeBuffer(L.subarray(i,i+1152),R.subarray(i,i+1152)):e.encodeBuffer(L.subarray(i,i+1152));if(d.length)parts.push(d);if(i%(1152*500)==0){o.textContent="Encoding MP3... "+Math.round(i/L.length*100)+"%";await new Promise(r=>setTimeout(r))}}
+const d=e.flush();if(d.length)parts.push(d);blob=new Blob(parts,{type:"audio/mpeg"})}
+catch(x){blob=wav(buf);ext="wav"}
+const u=URL.createObjectURL(blob),nm=f.name.replace(/\.[^.]+$/,"")||"audio";
+o.innerHTML=`Done. <a class="gbtn" style="text-decoration:none;display:inline-block;margin-left:8px" download="${esc(nm)}.${ext}" href="${u}">Download ${ext.toUpperCase()}</a>`}
+catch(x){o.textContent="This file could not be decoded by your browser. Try another format."}}
+const dlq=[["Is it free?","Yes. There is no sign-up and no limit for normal use."],["Does it work on mobile?","Yes. It runs in any modern browser on Android, iPhone and desktop."],["Can I download private videos?","No. Only public videos are supported."],["What am I allowed to download?","Only content you created or have permission to use. See our Copyright page."]];
+const dls=n=>["Copy the link of the "+n+" video.","Paste it into the box at the top of this page.","Press Download, then choose the file you want."];
+const GUIDE={tiktok:[dls("TikTok"),dlq],instagram:[dls("Instagram Reel"),dlq],youtube:[dls("YouTube"),dlq],
+mp3:[["Choose a video or audio file from your device.","Press Convert to MP3 and wait for processing.","Download the MP3 file."],[["Is my file uploaded?","No. Conversion happens in your browser, so the file stays on your device."],["Which files work?","Formats your browser can decode, such as MP4, WebM and MOV in most browsers. Files up to 100 MB are supported."]]],
+price:[["Choose the platform.","Enter the follower count and average engagement rate.","Press Calculate to see an estimated price range per post."],[["How accurate is the estimate?","It is a rough guide based on followers and engagement. Real prices also depend on niche, audience country and content type."],["What is engagement rate?","Likes and comments divided by followers. Use our Engagement Rate Calculator to find yours."]]],
+engagement:[["Enter followers and your average likes, comments and shares per post.","Press Calculate.","Compare the result: under 1% is low, 1-3% average, 3-6% good, above 6% excellent."],[["Which posts should I average?","The last 10 to 20 posts give a fairer picture than a single post."],["Why is TikTok engagement often higher?","Short videos are shown to wider audiences, so rates are often higher than on Instagram."]]],
+fake:[["Enter the followers, following, posts and average likes of the profile.","Press Check.","Read the risk level and compare it with the real engagement of the account."],[["Is this an audit?","No. It is a quick estimate based on the numbers you enter."],["What are warning signs?","Very low likes compared with followers, followers jumping overnight and almost no comments."]]]};
+const guide=k=>{const g=GUIDE[k];return g?`<div class="box guide"><h2>How to use ${esc(P[k][0])}</h2><ol>${g[0].map(s=>`<li>${esc(s)}</li>`).join("")}</ol><h2 style="margin-top:22px">FAQ</h2>${g[1].map(([q,a])=>`<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join("")}</div>`:""};
+let tsp=null;function ts(){if(!TS||!$("ts"))return;tsp=tsp||new Promise((ok,no)=>{const s=document.createElement("script");s.src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";s.onload=ok;s.onerror=no;document.head.appendChild(s)});tsp.then(()=>window.turnstile.render("#ts",{sitekey:TS})).catch(()=>{})}
+const mini=t=>`<div class="mini"><div class="wrap"><h1>${esc(t)}</h1></div></div>`;
+function view(k){
+ if(k=="home")return hero(null,"Free Online <em>Video Downloader</em>","Download TikTok, Instagram and YouTube videos in seconds.")+`<div class="wrap"><h2 class="sec">Choose your downloader</h2>${cards(DL)}<h2 class="sec">How it works</h2><div class="grid steps"><div class="step"><b>Copy the link</b><p>Open the video and copy its link.</p></div><div class="step"><b>Paste it</b><p>Paste the link in the box above.</p></div><div class="step"><b>Download</b><p>Press Download and save the file.</p></div></div><h2 class="sec">More free tools</h2>${cards(TL)}<h2 class="sec">Latest from the blog</h2>${pcards(POSTS.slice(0,3))}</div>`;
+ if(DL.includes(k))return hero(k,P[k][0],DESC[k])+`<div class="wrap">${guide(k)}<h2 class="sec">More downloaders</h2>${cards(DL.filter(x=>x!=k))}</div>`;
+ if(TOOLS[k])return mini(P[k][0])+`<div class="wrap"><div class="box">${TOOLS[k]()}</div>${guide(k)}</div>`;
+ if(k=="blog")return mini("Blog")+`<div class="wrap" style="margin-top:28px">${pcards(POSTS)}</div>`;
+ if(k.startsWith("post-")){const p=POSTS.find(x=>"post-"+x.id==k);return mini(p?p.title:"Not found")+`<div class="wrap"><div class="box"><small>${p?p.date:""}</small><p style="white-space:pre-wrap">${p?esc(p.body):""}</p><a style="cursor:pointer;color:var(--gold)" onclick="go('blog')">← Back to blog</a></div></div>`}
+ return mini(P[k][0])+`<div class="wrap"><div class="box"><p style="white-space:pre-wrap">${esc(TEXT[k]||"")}</p></div></div>`}
+function render(){
+ const L=l=>l.map(k=>`<a onclick="go('${k}')">${P[k][0]}</a>`).join("");
+ $("dm").innerHTML=`<h4>Downloaders</h4>${L(DL)}<h4>Tools</h4>${L(TL)}<h4>More</h4>${L(["blog","faq","about","contact","privacy","terms","dmca"])}`;
+ $("app").innerHTML=view(cur);ts();document.title=(cur=="home"?"Ferryclip – Free Video Downloader":P[cur]?P[cur][0]+" | Ferryclip":"Ferryclip")}
+addEventListener("keydown",e=>{if(e.key=="Escape")menu(0)});
+cur=key();render();
+addEventListener("hashchange",()=>{cur=key();render()});addEventListener("popstate",()=>{cur=key();render()});
+fetch("/api/posts").then(r=>r.ok?r.json():Promise.reject()).then(j=>{POSTS=j;LIVE=true;render()}).catch(()=>{});
+</script></body></html>
