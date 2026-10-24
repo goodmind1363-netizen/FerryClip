@@ -1,0 +1,13 @@
+name = "ferryclip"
+compatibility_date = "2025-09-01"
+pages_build_output_dir = "public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ferryclip-db"
+database_id = "PASTE_DATABASE_ID_HERE"
+
+[vars]
+ACCESS_TEAM = "your-team-name"
+ACCESS_AUD = "paste-access-aud-tag-here"
+DOWNLOAD_API_URL = "https://PROVIDER-HOST/endpoint?url={url}"
