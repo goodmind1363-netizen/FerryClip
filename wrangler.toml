@@ -5,7 +5,7 @@ pages_build_output_dir = "public"
 [[d1_databases]]
 binding = "DB"
 database_name = "ferryclip-db"
-database_id = "PASTE_YOUR_DATABASE_ID"
+database_id = "a66e3a25-bb4b-4622-9734-b25edd0d4911"
 
 [vars]
 ACCESS_TEAM = "your-team-name"
