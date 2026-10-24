@@ -13,11 +13,12 @@ function metaLabel(o) {
   }
   return "";
 }
-function collect(o, acc = [], d = 0, label = "") {
+const DKEY = /^(download_url|downloadurl|download_link|stream_url|tunnel_url|file_url)$/i;
+function collect(o, acc = [], d = 0, label = "", key = "") {
   if (d > 7 || acc.length > 30) return acc;
-  if (typeof o === "string") { if (/^https?:\/\//.test(o) && /(\.mp4|\.m4a|\.mp3|\.webm|download|video)/i.test(o)) acc.push({ url: o, label }); return acc; }
-  if (Array.isArray(o)) { o.forEach(x => collect(x, acc, d + 1, label)); return acc; }
-  if (o && typeof o === "object") { const m = metaLabel(o); for (const k in o) { const n = nice(k); collect(o[k], acc, d + 1, m ? (n && n !== m ? m + " - " + n : m) : (n || label)); } }
+  if (typeof o === "string") { if (/^https?:\/\//.test(o) && (DKEY.test(key) || /(\.mp4|\.m4a|\.mp3|\.webm|download|video)/i.test(o))) acc.push({ url: o, label }); return acc; }
+  if (Array.isArray(o)) { o.forEach(x => collect(x, acc, d + 1, label, key)); return acc; }
+  if (o && typeof o === "object") { const m = metaLabel(o); for (const k in o) { const n = nice(k); collect(o[k], acc, d + 1, m ? (n && n !== m ? m + " - " + n : m) : (n || label), k); } }
   return acc;
 }
 function links(json) {
