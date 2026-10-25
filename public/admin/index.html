@@ -5,6 +5,7 @@
 <div class="box" id="lg" style="display:none"><h2 style="margin-top:0">Sign in</h2><label>Password</label><input id="pw" type="password" autocomplete="current-password"><div id="cf"></div><button onclick="login()">Sign in</button><p id="lm"></p></div>
 <div id="ap" style="display:none">
 <div class="box"><h2 id="h" style="margin-top:0">New post</h2><label>Title</label><input id="t"><label>Content</label><textarea id="b"></textarea><button onclick="save()">Publish</button> <button class="s" onclick="reset()">Clear</button><p id="m"></p></div>
+<div class="box"><h2 style="margin-top:0">Import posts</h2><p>Choose a .json file with a list of posts. Posts whose title already exists are skipped.</p><input id="im" type="file" accept=".json,application/json"><button onclick="importPosts()">Import</button><p id="io"></p></div>
 <div class="box"><h2 style="margin-top:0">All posts</h2><div id="l"></div></div>
 </div></main>
 <script>
@@ -13,6 +14,16 @@ function view(on){$("lg").style.display=on?"none":"block";$("ap").style.display=
 async function load(){const r=await fetch(A);if(!r.ok){view(false);return}view(true);L=await r.json();$("l").innerHTML=L.map(p=>`<div class="r"><span>${esc(p.title)} <small>(${p.date})</small></span><button class="s" onclick="edit(${p.id})">Edit</button><button class="s" onclick="del(${p.id})">Delete</button></div>`).join("")||"No posts yet."}
 async function initTs(){try{const c=await(await fetch("/api/config")).json();if(!c.tsKey)return;await new Promise((ok,no)=>{const s=document.createElement("script");s.src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";s.onload=ok;s.onerror=no;document.head.appendChild(s)});tsId=turnstile.render("#cf",{sitekey:c.tsKey})}catch(e){}}
 async function login(){$("lm").textContent="Checking...";const r=await fetch("/api/admin/login",{method:"POST",headers:J,body:JSON.stringify({password:$("pw").value,ts:tsId!==null?turnstile.getResponse(tsId):""})});if(r.ok){$("pw").value="";$("lm").textContent="";load()}else{$("lm").textContent=await r.text();if(tsId!==null)turnstile.reset(tsId)}}
+async function importPosts(){const f=$("im").files[0],o=$("io");if(!f){o.textContent="Choose a .json file first.";return}
+let a;try{a=JSON.parse(await f.text())}catch(e){o.textContent="This file is not valid JSON.";return}
+if(!Array.isArray(a)){o.textContent="Expected a list of posts.";return}
+const have=new Set(L.map(p=>p.title));let n=0,s=0;
+for(const p of a){if(!p||!p.title||!p.body)continue;if(have.has(p.title)){s++;continue}
+o.textContent="Importing "+(n+s+1)+" of "+a.length+"...";
+const r=await fetch(A,{method:"POST",headers:J,body:JSON.stringify({title:p.title,body:p.body})});
+if(!r.ok){o.textContent="Stopped at \""+p.title+"\" (error "+r.status+")";return}
+n++;have.add(p.title)}
+o.textContent="Done: "+n+" added, "+s+" skipped (already exist).";load()}
 async function logout(){await fetch("/api/admin/login",{method:"DELETE"});view(false)}
 function edit(id){const p=L.find(x=>x.id==id);eid=id;$("t").value=p.title;$("b").value=p.body;$("h").textContent="Edit post";scrollTo(0,0)}
 function reset(){eid=null;$("t").value=$("b").value="";$("h").textContent="New post"}
