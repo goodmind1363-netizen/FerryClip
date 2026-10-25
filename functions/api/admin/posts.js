@@ -1,4 +1,4 @@
-import { isAdmin } from "../../../lib/access.js";
+import { isAdmin } from "../../../lib/auth.js";
 export async function onRequest({ request, env }) {
   if (!(await isAdmin(request, env))) return new Response("Forbidden", { status: 403 });
   const m = request.method, url = new URL(request.url), id = url.searchParams.get("id");
