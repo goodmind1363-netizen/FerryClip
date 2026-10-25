@@ -34,3 +34,5 @@
   };
 })();
 // end of file
+for (const k in TEXT) TEXT[k] = TEXT[k].split("support@yourdomain.com").join("info@ferryclip.com");
+if (typeof render === "function") render();
