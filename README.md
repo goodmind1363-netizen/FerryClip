@@ -52,3 +52,4 @@ TikTok and YouTube previews (title, thumbnail) use their public oEmbed and need 
 - All post text is HTML-escaped; database queries are parameterized.
 - Security headers in `public/_headers`; strict CSP on `/admin`. Add AdSense hosts before adding a CSP to public pages.
 - Provider key lives only in a Cloudflare secret, never in the page.
+  . 
