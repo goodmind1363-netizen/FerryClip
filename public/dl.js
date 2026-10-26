@@ -36,3 +36,12 @@
 // end of file
 for (const k in TEXT) TEXT[k] = TEXT[k].split("support@yourdomain.com").join("info@ferryclip.com");
 if (typeof render === "function") render();
+(function () {
+  const add = () => document.querySelectorAll('a.card[href^="/blog/"]:not([data-t])').forEach(a => {
+    a.dataset.t = 1;
+    const id = a.getAttribute("href").split("/")[2], p = (typeof POSTS !== "undefined" ? POSTS : []).find(x => String(x.id) === id);
+    if (p && p.img) { const i = document.createElement("img"); i.src = "/api/img?id=" + id; i.alt = p.title; i.loading = "lazy"; i.width = 600; i.height = 315; i.style.cssText = "width:100%;height:auto;aspect-ratio:1200/630;object-fit:cover;border-radius:10px;margin-bottom:10px"; a.prepend(i); }
+  });
+  const app = document.getElementById("app");
+  if (app) { new MutationObserver(add).observe(app, { childList: true }); add(); }
+})();
