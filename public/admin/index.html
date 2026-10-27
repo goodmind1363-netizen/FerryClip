@@ -9,14 +9,14 @@
 <div class="box"><h2 style="margin-top:0">All posts</h2><div id="l"></div></div>
 </div></main>
 <script>
-const A="/api/admin/posts",J={"Content-Type":"application/json"};let L=[],eid=null,tsId=null,IMG;const $=i=>document.getElementById(i),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const A="/api/admin/posts",J={"Content-Type":"application/json"};let L=[],eid=null,tsId=null,IMG,BUSY=false;const $=i=>document.getElementById(i),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const today=()=>new Date().toISOString().slice(0,10);
 function view(on){$("lg").style.display=on?"none":"block";$("ap").style.display=on?"block":"none";$("so").style.display=on?"inline-block":"none"}
 async function load(){const r=await fetch(A);if(!r.ok){view(false);return}view(true);L=await r.json();$("l").innerHTML=L.map(p=>`<div class="r"><span>${esc(p.title)} <small>(${p.date}${p.date>today()?" - scheduled":""}${p.img?" - image":""})</small></span><button class="s" onclick="edit(${p.id})">Edit</button><button class="s" onclick="del(${p.id})">Delete</button></div>`).join("")||"No posts yet."}
 async function initTs(){try{const c=await(await fetch("/api/config")).json();if(!c.tsKey)return;await new Promise((ok,no)=>{const s=document.createElement("script");s.src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";s.onload=ok;s.onerror=no;document.head.appendChild(s)});tsId=turnstile.render("#cf",{sitekey:c.tsKey})}catch(e){}}
 async function login(){$("lm").textContent="Checking...";const r=await fetch("/api/admin/login",{method:"POST",headers:J,body:JSON.stringify({password:$("pw").value,ts:tsId!==null?turnstile.getResponse(tsId):""})});if(r.ok){$("pw").value="";$("lm").textContent="";load()}else{$("lm").textContent=await r.text();if(tsId!==null)turnstile.reset(tsId)}}
 function shot(f){return new Promise((ok,no)=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const W=1200,H=630,c=document.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d"),s=Math.max(W/im.width,H/im.height),w=im.width*s,h=im.height*s;x.drawImage(im,(W-w)/2,(H-h)/2,w,h);URL.revokeObjectURL(u);ok(c.toDataURL("image/jpeg",0.72))};im.onerror=()=>no();im.src=u})}
-async function pick(){const f=$("im2").files[0];if(!f)return;try{IMG=await shot(f);$("ip").src=IMG;$("ip").style.display="block"}catch(e){$("m").textContent="Could not read this image."}}
+async function pick(){const f=$("im2").files[0];if(!f)return;BUSY=true;$("m").textContent="Processing image...";try{IMG=await shot(f);$("ip").src=IMG;$("ip").style.display="block";$("m").textContent="Image ready ("+Math.round(IMG.length*0.75/1024)+" KB). Now press Publish."}catch(e){IMG=undefined;$("m").textContent="Could not read this image. Try a JPG or PNG."}BUSY=false}
 function noImg(){IMG="";$("im2").value="";$("ip").style.display="none"}
 async function importPosts(){const f=$("im").files[0],o=$("io");if(!f){o.textContent="Choose a .json file first.";return}
 let a;try{a=JSON.parse(await f.text())}catch(e){o.textContent="This file is not valid JSON.";return}
@@ -32,7 +32,14 @@ o.textContent="Done: "+n+" added, "+s+" skipped (already exist).";load()}
 async function logout(){await fetch("/api/admin/login",{method:"DELETE"});view(false)}
 function edit(id){const p=L.find(x=>x.id==id);eid=id;IMG=undefined;$("t").value=p.title;$("b").value=p.body;$("d").value=p.date;$("im2").value="";if(p.img){$("ip").src="/api/img?id="+id+"&v="+Date.now();$("ip").style.display="block"}else $("ip").style.display="none";$("h").textContent="Edit post";scrollTo(0,0)}
 function reset(){eid=null;IMG=undefined;$("t").value=$("b").value="";$("d").value=today();$("im2").value="";$("ip").style.display="none";$("h").textContent="New post"}
-async function save(){const body={title:$("t").value,body:$("b").value,date:$("d").value||today()};if(IMG!==undefined)body.image=IMG;const r=await fetch(eid?A+"?id="+eid:A,{method:eid?"PUT":"POST",headers:J,body:JSON.stringify(body)});$("m").textContent=r.ok?"Saved.":"Error: "+r.status+" "+await r.text();if(r.ok){reset();load()}}
+async function save(){if(BUSY){$("m").textContent="Please wait, the image is still processing.";return}
+const had=typeof IMG==="string"&&IMG.length>0,id=eid,title=$("t").value.trim();
+const body={title:$("t").value,body:$("b").value,date:$("d").value||today()};if(IMG!==undefined)body.image=IMG;
+const r=await fetch(eid?A+"?id="+eid:A,{method:eid?"PUT":"POST",headers:J,body:JSON.stringify(body)});
+if(!r.ok){$("m").textContent="Error: "+r.status+" "+await r.text();return}
+reset();await load();
+const p=id?L.find(x=>x.id==id):L.find(x=>x.title===title);
+$("m").textContent=had?(p&&p.img?"Saved with image.":"Saved, but the server did not keep the image."):"Saved."}
 async function del(id){if(confirm("Delete this post?")){await fetch(A+"?id="+id,{method:"DELETE"});load()}}
 $("d").value=today();initTs();load();
 </script></body></html>
